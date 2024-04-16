@@ -6,10 +6,10 @@ import { BORE_VERSION, RELEASE_BASE } from "./constants";
 import { UnsupportedError } from "./error";
 
 const LINUX_URL: Partial<Record<typeof process.arch, string>> = {
-    arm64: "bore-linux-arm64",
-    arm: "bore-linux-arm",
-    x64: "bore-linux-amd64",
-    ia32: "bore-linux-386",
+    arm64: "bore-VERSION-armv7-unknown-linux-gnueabihf.tar.gz",
+    arm: "bore-VERSION-arm-unknown-linux-gnueabi.tar.gz",
+    x64: "bore-VERSION-x86_64-unknown-linux-musl.tar.gz",
+    ia32: "bore-VERSION-i686-unknown-linux-musl.tar.gz",
 };
 
 const MACOS_URL: Partial<Record<typeof process.arch, string>> = {
@@ -53,7 +53,11 @@ export async function install_linux(to: string, version = BORE_VERSION): Promise
 
     file = file.replace("VERSION", version);
 
-    await download(resolve_base(version) + file, to);
+    await download(resolve_base(version) + file, `${to}.tar.gz`);
+    process.env.VERBOSE && console.log(`Extracting to ${to}`);
+    execSync(`tar -xzf ${path.basename(`${to}.tar.gz`)}`, { cwd: path.dirname(to) });
+    fs.unlinkSync(`${to}.tar.gz`);
+    fs.renameSync(`${path.dirname(to)}/bore`, to);
     fs.chmodSync(to, "755");
     return to;
 }
@@ -67,10 +71,10 @@ export async function install_macos(to: string, version = BORE_VERSION): Promise
 
     file = file.replace("VERSION", version);
 
-    await download(resolve_base(version) + file, `${to}.tgz`);
+    await download(resolve_base(version) + file, `${to}.tar.gz`);
     process.env.VERBOSE && console.log(`Extracting to ${to}`);
-    execSync(`tar -xzf ${path.basename(`${to}.tgz`)}`, { cwd: path.dirname(to) });
-    fs.unlinkSync(`${to}.tgz`);
+    execSync(`tar -xzf ${path.basename(`${to}.tar.gz`)}`, { cwd: path.dirname(to) });
+    fs.unlinkSync(`${to}.tar.gz`);
     fs.renameSync(`${path.dirname(to)}/bore`, to);
     return to;
 }
