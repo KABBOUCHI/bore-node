@@ -1,0 +1,27 @@
+{
+  "name": "bore-node",
+  "version": "0.0.1",
+  "description": "bore in Node, spawn a tunnel to your localhost",
+  "main": "./lib/lib.js",
+  "types": "./lib/lib.d.ts",
+  "scripts": {
+    "test": "vitest",
+    "dev": "tsup --watch",
+    "build": "tsup"
+  },
+  "keywords": [
+    "bore",
+    "tunnel",
+    "macos",
+    "windows",
+    "linux",
+    "cli",
+    "lib"
+  ],
+  "author": "Georges KABBOUCHI <georges.kabbouchi@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "tsup": "^8.0.2",
+    "vitest": "^1.5.0"
+  }
+}

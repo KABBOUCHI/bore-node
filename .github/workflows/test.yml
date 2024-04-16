@@ -1,0 +1,40 @@
+name: Test
+
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - master
+    workflow_dispatch:
+
+jobs:
+    test:
+        strategy:
+            fail-fast: false
+            matrix:
+                os:
+                    - ubuntu-latest
+                    - windows-latest
+                    - macos-latest
+
+        name: "${{ matrix.os }}"
+        runs-on: ${{ matrix.os }}
+        timeout-minutes: 15
+        env:
+            VERBOSE: 1
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Setup PNPM
+              uses: pnpm/action-setup@v2
+              with:
+                  run_install: true
+
+            - name: Build
+              run: pnpm build
+
+            - name: Test
+              run: pnpm test
