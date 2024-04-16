@@ -1,9 +1,9 @@
 {
   "name": "bore-node",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "bore in Node, spawn a tunnel to your localhost",
-  "main": "./lib/lib.js",
-  "types": "./lib/lib.d.ts",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "files": [
     "lib"
   ],
