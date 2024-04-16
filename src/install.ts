@@ -92,7 +92,7 @@ export async function install_windows(to: string, version = BORE_VERSION): Promi
     
     execSync(`tar -xzf ${path.basename(`${to}.zip`)}`, { cwd: path.dirname(to) });
     fs.unlinkSync(`${to}.zip`);
-    fs.renameSync(`${path.dirname(to)}\\bore`, to);
+    fs.renameSync(`${path.dirname(to)}\\bore.exe`, to);
     return to;
 }
 
